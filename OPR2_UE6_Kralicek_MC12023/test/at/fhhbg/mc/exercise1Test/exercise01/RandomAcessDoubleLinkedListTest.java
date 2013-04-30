@@ -5,6 +5,8 @@ package at.fhhbg.mc.exercise1Test.exercise01;
 
 import static org.junit.Assert.*;
 
+import java.rmi.UnexpectedException;
+
 import org.junit.Test;
 
 import at.fhhbg.mc.exercise1.exercise01.InvalidAccessException;
@@ -96,26 +98,49 @@ public class RandomAcessDoubleLinkedListTest {
 			fail("Unexpected Exception");
 
 		}
-		assertEquals(false, test.removeAt(-2)); // index smaller than 1 is not
-												// possible
-		assertEquals(false, test.removeAt(8)); // index bigger than list is not
+		try {
+			assertEquals(false, test.removeAt(-2)); // index smaller than 1 is
+													// not
+			fail("InvalidAccessException");
+		} catch (InvalidAccessException e) {
+			// possible
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+		}
+		try {
+			assertEquals(false, test.removeAt(8));
+			fail("InvaidAccessExeption"); // index bigger than list is not
+		} catch (InvalidAccessException e) {
 
-		// possible
-		assertEquals(true, test.removeAt(7));
-		assertEquals(true, test.removeAt(2));
-		assertEquals(true, test.removeAt(5));
-		assertEquals(true, test.removeAt(4));
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+
+		}
+		try { // possible
+			assertEquals(true, test.removeAt(7));
+			assertEquals(true, test.removeAt(2));
+			assertEquals(true, test.removeAt(5));
+			assertEquals(true, test.removeAt(4));
+
+		} catch (Exception E) {
+			fail("Unexpected Exception");
+
+		}
+
 	}
 
 	@Test
 	public void removeAll() {
 		RandomAccessDoubleLinkedList test = new RandomAccessDoubleLinkedList();
+		try {
+			test.insertAt(2, 5);
+			test.insertAt(7, 2);
+			test.insertAt(5, 4);
+			test.insertAt(9, 3);
+		} catch (Exception e) {
+			fail("Unexpected Exception");
 
-		test.insertAt(2, 5);
-		test.insertAt(7, 2);
-		test.insertAt(5, 4);
-		test.insertAt(9, 3);
-
+		}
 		assertEquals(true, test.removeAll(3));
 		assertEquals(false, test.contains(3));
 
@@ -125,13 +150,32 @@ public class RandomAcessDoubleLinkedListTest {
 	@Test
 	public void elementAtTest() {
 		RandomAccessDoubleLinkedList test = new RandomAccessDoubleLinkedList();
+		try {
+			test.insertAt(2, 5);
+			test.insertAt(7, 2);
+			test.insertAt(5, 4);
+			test.insertAt(9, 3);
+		} catch (Exception e) {
+			fail("Unexpected Exception");
 
-		test.insertAt(2, 5);
-		test.insertAt(7, 2);
-		test.insertAt(5, 4);
-		test.insertAt(9, 3);
+		}
+		try {
+			assertEquals(5, test.elementAt(2));
+			assertEquals(2, test.elementAt(7));
+		} catch (Exception e) {
+			fail("Unexpected Exception");
 
-		assertEquals(5, test.elementAt(2));
-		assertEquals(2, test.elementAt(7));
+		}
+
+		try {
+			test.elementAt(10);
+			fail("ValueException");
+		} catch (ValueException e) {
+
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+
+		}
+
 	}
 }
