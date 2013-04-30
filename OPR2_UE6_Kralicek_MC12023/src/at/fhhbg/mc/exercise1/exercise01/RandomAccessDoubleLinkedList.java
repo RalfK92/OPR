@@ -261,6 +261,10 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 	public int elementAt(int index) throws ValueException {
 
 		DLNode current = runToIndex(index - 1);
+		if(current==null){
+			throw new ValueException("Node is not initialiced", index);
+
+		}
 		if (current.getVal() == Integer.MIN_VALUE) {
 			throw new ValueException("Node is not initialiced", index);
 		}

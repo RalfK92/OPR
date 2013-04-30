@@ -87,7 +87,8 @@ public class DoubleLinkedList {
 		DLNode current = head;
 
 		while (current != null) {
-			if (current.getVal() == Integer.MIN_VALUE) {
+			if (current.getVal() == Integer.MIN_VALUE
+					&& current.getList() != null) {
 
 				clonedList.pushBackRecursive(current.getList().clone());
 			} else {
@@ -388,7 +389,8 @@ public class DoubleLinkedList {
 
 		while (current != null) {
 
-			if (current.getVal() == Integer.MIN_VALUE) {
+			if (current.getVal() == Integer.MIN_VALUE
+					&& current.getList() != null) {
 				counter -= 1;// The Node which contains the list is not to
 								// count.
 				counter += current.getList().elements();
