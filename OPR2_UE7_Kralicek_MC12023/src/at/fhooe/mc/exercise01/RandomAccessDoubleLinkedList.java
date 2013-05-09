@@ -37,7 +37,8 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 	 * @throws InvalidAccessException
 	 *             if the index is smaller than 0
 	 */
-	public void insertAt(int index, int val) throws InvalidAccessException {
+	public void insertAt(int index, Comparable val)
+			throws InvalidAccessException {
 		if (index - 1 < 0) {
 			throw new InvalidAccessException("Index < 0");
 		}
@@ -158,7 +159,7 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 	}
 
 	/**
-	 * Removes the element at the given index. False if returned if index >
+	 * Removes the element at the given index. False is returned if index >
 	 * list's size.
 	 * 
 	 * @param index
@@ -213,7 +214,7 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 			next = current.getNext();
 
 			prev = current.getPrev();
-			//
+			
 			while (prev.getVal() == null) {
 				if (head == prev) {
 					head = null;
@@ -222,7 +223,7 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 				}
 				prev = prev.getPrev();
 			}
-			//
+			
 			prev.setNext(null);
 			current.setPrev(null);
 			tail = prev;
@@ -273,8 +274,8 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 	}
 
 	/**
-	 * Returns the integer value at the given index. If index > list's size,
-	 * Integer.MIN_VALUE is returned.
+	 * Returns the integer value at the given index. If index > list's size, a
+	 * ValueException is thrown.
 	 * 
 	 * @param index
 	 *            the position in the list you want to know the element

@@ -27,7 +27,7 @@ public class DLNode {
 	/**
 	 * Constructor with value.
 	 * 
-	 * @param val
+	 * @param value
 	 *            the value which should be set.
 	 */
 	public DLNode(Comparable value) {
@@ -44,8 +44,6 @@ public class DLNode {
 	 *            the next pointer
 	 * @param prev
 	 *            the preview pointer
-	 * @param list
-	 *            the sublist
 	 */
 	public DLNode(Comparable value, DLNode next, DLNode prev) {
 
@@ -67,7 +65,7 @@ public class DLNode {
 	/**
 	 * Method to set the value
 	 * 
-	 * @param val
+	 * @param value
 	 *            the value
 	 */
 	public void setVal(Comparable value) {
@@ -112,6 +110,11 @@ public class DLNode {
 		this.prev = prev;
 	}
 
+	/**
+	 * This method checks if a node is initialized
+	 * 
+	 * @return true if the node is initialized false if not
+	 */
 	public boolean isInitialized() {
 		return value != null;
 	}

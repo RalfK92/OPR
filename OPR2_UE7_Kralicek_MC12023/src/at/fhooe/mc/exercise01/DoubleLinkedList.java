@@ -139,14 +139,15 @@ public class DoubleLinkedList {
 	public String toString() {
 		StringBuilder printOut = new StringBuilder();
 		DLNode current = new DLNode();
-
+		int counter = 0;
 		current = head;
 		while (current != null) {
-
-			printOut.append(current.getVal());
-			printOut.append(" | ");
+			printOut.append("[ value no." + counter+": ");
+			printOut.append(String.format("%5d", current.getVal()));
+			printOut.append("] \n");
 
 			current = current.getNext();
+			counter++;
 		}
 
 		return printOut.toString();
