@@ -44,12 +44,21 @@ public class DoubleLinkedList {
 	 *            the other list
 	 * @throws InvalidAccessException
 	 *             if the list other is null
+	 * @throws ValueException
+	 *             if the value of the head of the other list is not comparable
+	 *             to the head node of this list.
 	 */
 	public boolean pushFront(DoubleLinkedList other)
-			throws InvalidAccessException {
+			throws InvalidAccessException, ValueException {
 
 		if (other == null) {
 			throw new InvalidAccessException("Empty List");
+		}
+		if (this.head != null) {
+			if (!isComparable(this.head.getVal(), other.head.getVal())) {
+				throw new ValueException(
+						"The head value of the head node of the other list is not comparable to the head node of the list you want to insert it.");
+			}
 		}
 		DoubleLinkedList clonedList = other.clone();
 
@@ -67,15 +76,28 @@ public class DoubleLinkedList {
 	 *            the other list
 	 * @throws InvalidAccessException
 	 *             if the other list is null
+	 * @throws ValueException
+	 *             if the value of the head of the other list is not comparable
+	 *             to the head node of this list.
 	 */
 	public boolean pushBack(DoubleLinkedList other)
-			throws InvalidAccessException {
+			throws InvalidAccessException, ValueException {
 		int counter = -1;
 		if (other == null) {
 			throw new InvalidAccessException("Empty list.");
 		}
+		if (this.head != null) {
+			if (!isComparable(this.head.getVal(), other.head.getVal())) {
+				throw new ValueException(
+						"The head value of the head node of the other list is not comparable to the head node of the list you want to insert it.");
+			}
+		}
 		while (counter <= other.elements()) {
-			this.pushBack(other.popFront());
+			try {
+				this.pushBack(other.popFront());
+			} catch (ValueException e) {
+
+			}
 			counter++;
 		}
 		return true;
@@ -90,7 +112,10 @@ public class DoubleLinkedList {
 
 		current = head;
 		do {
-			clonedList.pushBack(current.getVal());
+			try {
+				clonedList.pushBack(current.getVal());
+			} catch (ValueException e) {
+			}
 			current = current.getNext();
 		} while (current != null);
 
@@ -113,6 +138,10 @@ public class DoubleLinkedList {
 
 		if (clone1.elements() != clone2.elements()) {
 			return false;
+		} else if (!isComparable(clone1.head.getVal(), clone2.head.getVal())) {
+
+			return false;
+
 		} else {
 			while (clone1.head != null) {
 
@@ -142,7 +171,7 @@ public class DoubleLinkedList {
 		int counter = 0;
 		current = head;
 		while (current != null) {
-			printOut.append("[ value no." + counter+": ");
+			printOut.append("[ value no." + counter + ": ");
 			printOut.append(String.format("%5d", current.getVal()));
 			printOut.append("] \n");
 
@@ -214,8 +243,10 @@ public class DoubleLinkedList {
 	 * 
 	 * @param val
 	 *            the value in the list.
+	 * @throws ValueException
+	 *             if the val is not comparable to the head element
 	 */
-	public void pushFront(Comparable val) {
+	public void pushFront(Comparable val) throws ValueException {
 		DLNode node = new DLNode(val);
 		node.setVal(val);
 
@@ -224,6 +255,10 @@ public class DoubleLinkedList {
 			tail = node;
 
 		} else {
+			if (!isComparable(head.getVal(), val)) {
+				throw new ValueException(
+						"The value you want to insert is not comparable to the head value.");
+			}
 			node.setNext(head);
 			head.setPrev(node);
 			head = node;
@@ -237,13 +272,18 @@ public class DoubleLinkedList {
 	 * 
 	 * @param val
 	 *            the value of the new Node.
+	 * @throws ValueException
+	 *             if the val is not comparable to the head value
 	 */
-	public void pushBack(Comparable val) {
+	public void pushBack(Comparable val) throws ValueException {
 		DLNode node = new DLNode(val);
 		if (head == null && tail == null) {
 			pushFront(val);
 		} else {
-
+			if (!isComparable(head.getVal(), val)) {
+				throw new ValueException(
+						"The value is not comparable to the head value");
+			}
 			node.setVal(val);
 			node.setPrev(tail);
 			tail.setNext(node);
@@ -380,24 +420,37 @@ public class DoubleLinkedList {
 
 	}
 
+	/**
+	 * This method returns true if two comparable are comparable false otherwise
+	 * 
+	 * @param _c1
+	 *            the one comparable
+	 * @param _c2
+	 *            the other comparable
+	 * @return true if the two comparable are comparable otherwise false
+	 */
+	public static boolean isComparable(Comparable _c1, Comparable _c2) {
+		try {
+			_c1.compareTo(_c2);
+			return true;
+		} catch (ClassCastException _e) {
+			return false;
+		}
+	}
+
 	public static void main(String[] args) {
-		DoubleLinkedList l = new DoubleLinkedList();
-		DoubleLinkedList l1 = new DoubleLinkedList();
-		l1.pushBack(1);
-		l1.pushBack(2);
-		l1.pushBack(3);
-
-		l.pushBack(1);
-		l.pushBack(2);
-		l.pushBack(3);
-		l.pushBack(4);
-		l.pushBack(5);
-
-		System.out.println(l.toString());
-		// l.reverse();
-
-		// System.out.print(l.toString());
-
+		/*
+		 * DoubleLinkedList l = new DoubleLinkedList(); DoubleLinkedList l1 =
+		 * new DoubleLinkedList(); l1.pushBack(1); l1.pushBack(2);
+		 * l1.pushBack(3);
+		 * 
+		 * l.pushBack(1); l.pushBack(2); l.pushBack(3); l.pushBack(4);
+		 * l.pushBack(5);
+		 * 
+		 * System.out.println(l.toString()); // l.reverse();
+		 * 
+		 * // System.out.print(l.toString());
+		 */
 	}
 
 }

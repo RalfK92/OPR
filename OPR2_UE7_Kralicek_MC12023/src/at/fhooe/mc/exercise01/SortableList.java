@@ -4,7 +4,8 @@ public class SortableList extends RandomAccessDoubleLinkedList implements
 		Sortable {
 
 	@Override
-	public void insertSorted(Comparable _value, boolean _ascending) {
+	public void insertSorted(Comparable _value, boolean _ascending)
+			throws ValueException {
 		DLNode current = this.head;
 
 		if (head == null) {
@@ -12,6 +13,10 @@ public class SortableList extends RandomAccessDoubleLinkedList implements
 			head = insertNode;
 			tail = head;
 		} else {
+			if (!isComparable(head.getVal(), _value)) {
+				throw new ValueException(
+						"The value you want to insert is not the same Type as the head value.");
+			}
 			if (_ascending) {
 
 				while (current != null
@@ -52,7 +57,11 @@ public class SortableList extends RandomAccessDoubleLinkedList implements
 		SortableList sortedList = new SortableList();
 
 		while (current != null) {
-			sortedList.insertSorted(current.getVal(), true);
+			try {
+				sortedList.insertSorted(current.getVal(), true);
+			} catch (ValueException e) {
+
+			}
 			current = current.getNext();
 		}
 
@@ -66,11 +75,32 @@ public class SortableList extends RandomAccessDoubleLinkedList implements
 		DLNode current = clone.head;
 		SortableList sortedList = new SortableList();
 		while (current != null) {
-			sortedList.insertSorted(current.getVal(), false);
+			try {
+				sortedList.insertSorted(current.getVal(), false);
+			} catch (ValueException e) {
+
+			}
 			current = current.getNext();
 		}
 
 		return sortedList;
 	}
 
+	/**
+	 * This method returns true if two comparable are comparable false otherwise
+	 * 
+	 * @param _c1
+	 *            the one comparable
+	 * @param _c2
+	 *            the other comparable
+	 * @return true if the two comparable are comparable otherwise false
+	 */
+	public static boolean isComparable(Comparable _c1, Comparable _c2) {
+		try {
+			_c1.compareTo(_c2);
+			return true;
+		} catch (ClassCastException _e) {
+			return false;
+		}
+	}
 }

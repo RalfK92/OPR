@@ -18,7 +18,6 @@ import at.fhooe.mc.exercise01.ValueException;
  */
 public class RandomAcessDoubleLinkedListTest {
 
-	@Test
 	public void useCopyConstructor() {
 		RandomAccessDoubleLinkedList test1 = new RandomAccessDoubleLinkedList();
 		try {

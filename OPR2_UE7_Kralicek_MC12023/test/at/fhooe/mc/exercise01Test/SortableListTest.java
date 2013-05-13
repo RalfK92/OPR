@@ -6,19 +6,32 @@ import org.junit.Test;
 
 import at.fhooe.mc.exercise01.Sortable;
 import at.fhooe.mc.exercise01.SortableList;
+import at.fhooe.mc.exercise01.ValueException;
 
 public class SortableListTest {
 
 	@Test
 	public void insertSortedTest() {
 		SortableList test = new SortableList();
+		try {
+			test.pushFront(3);
+			test.pushFront(66);
 
-		test.pushFront(3);
-		test.pushFront(66);
-		test.insertSorted(5, true);
-		test.insertSorted(25, false);
-		test.insertSorted(2, true);
+			test.insertSorted(5, true);
+			test.insertSorted(25, false);
+			test.insertSorted(2, true);
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+		}
 
+		try {
+			test.insertSorted("s", true);
+		} catch (ValueException e) {
+			// Excpeted
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+
+		}
 		try {
 			assertEquals(2, test.elementAt(1));
 			assertEquals(25, test.elementAt(2));
@@ -35,13 +48,16 @@ public class SortableListTest {
 	public void sortAcending() {
 		SortableList test = new SortableList();
 		SortableList test1 = new SortableList();
+		try {
+			test.pushFront(3);
+			test.pushFront(66);
 
-		test.pushFront(3);
-		test.pushFront(66);
-		test.insertSorted(5, true);
-		test.insertSorted(25, false);
-		test.insertSorted(2, true);
-
+			test.insertSorted(5, true);
+			test.insertSorted(25, false);
+			test.insertSorted(2, true);
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+		}
 		test1 = (SortableList) test.sortAscending();
 
 		try {
@@ -59,13 +75,16 @@ public class SortableListTest {
 	public void sortDescending() {
 		SortableList test = new SortableList();
 		SortableList test1 = new SortableList();
+		try {
+			test.pushFront(3);
+			test.pushFront(66);
 
-		test.pushFront(3);
-		test.pushFront(66);
-		test.insertSorted(5, true);
-		test.insertSorted(25, false);
-		test.insertSorted(2, true);
-
+			test.insertSorted(5, true);
+			test.insertSorted(25, false);
+			test.insertSorted(2, true);
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+		}
 		test1 = (SortableList) test.sortDescending();
 
 		try {

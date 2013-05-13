@@ -16,13 +16,14 @@ public class DoubleLinkedListTest {
 	public void pushFrontDLLTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-		l.pushBack(4);
-		l.pushBack(5);
-		l.pushBack(6);
-		other.pushBack(1);
-		other.pushBack(2);
-		other.pushBack(3);
 		try {
+			l.pushBack(4);
+			l.pushBack(5);
+			l.pushBack(6);
+			other.pushBack(1);
+			other.pushBack(2);
+			other.pushBack(3);
+
 			l.pushFront(other);
 			assertEquals(1, l.popFront());
 			assertEquals(2, l.popFront());
@@ -30,7 +31,7 @@ public class DoubleLinkedListTest {
 			assertEquals(4, l.popFront());
 			assertEquals(5, l.popFront());
 			assertEquals(6, l.popFront());
-		} catch (InvalidAccessException e) {
+		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
 
@@ -40,13 +41,14 @@ public class DoubleLinkedListTest {
 	public void pushBackDLLTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-		other.pushBack(4);
-		other.pushBack(5);
-		other.pushBack(6);
-		l.pushBack(1);
-		l.pushBack(2);
-		l.pushBack(3);
+
 		try {
+			other.pushBack(4);
+			other.pushBack(5);
+			other.pushBack(6);
+			l.pushBack(1);
+			l.pushBack(2);
+			l.pushBack(3);
 			l.pushBack(other);
 
 			assertEquals(1, l.popFront());
@@ -97,25 +99,24 @@ public class DoubleLinkedListTest {
 		DoubleLinkedList other = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
 		DoubleLinkedList other1 = new DoubleLinkedList();
-
-		l.pushBack(1);
-		l.pushBack(2);
-		l.pushBack(3);
-
-		other.pushBack(1);
-		other.pushBack(2);
-		other.pushBack(3);
-
-		assertEquals(true, l.equals(other));
-
-		l1.pushBack(4);
-		l1.pushBack(5);
-
-		other1.pushBack(4);
-		other1.pushBack(5);
-
-		assertEquals(true, l1.equals(other1));
 		try {
+			l.pushBack(1);
+			l.pushBack(2);
+			l.pushBack(3);
+
+			other.pushBack(1);
+			other.pushBack(2);
+			other.pushBack(3);
+
+			assertEquals(true, l.equals(other));
+
+			l1.pushBack(4);
+			l1.pushBack(5);
+
+			other1.pushBack(4);
+			other1.pushBack(5);
+
+			assertEquals(true, l1.equals(other1));
 			other1.popBack();
 		} catch (Exception e) {
 			fail("Unexpected Exception");
@@ -129,19 +130,18 @@ public class DoubleLinkedListTest {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-
-		l.pushBack(1);
-		l.pushBack(3);
-		l.pushBack(4);
-		l.pushBack(2);
 		try {
+			l.pushBack(1);
+			l.pushBack(3);
+			l.pushBack(4);
+			l.pushBack(2);
 			other.pushFront(l);
+
+			other.pushBack(6);
+			other.pushBack(5);
 		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
-		other.pushBack(6);
-		other.pushBack(5);
-
 		assertEquals(true, l.search(2));
 		assertEquals(false, l.search(5));
 		assertEquals(true, other.search(2));
@@ -155,11 +155,15 @@ public class DoubleLinkedListTest {
 	public void clearTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
-		l.pushFront(1);
-		l.pushFront(2);
-		l.pushBack(3);
-		l.clear();
 
+		try {
+			l.pushFront(1);
+			l.pushFront(2);
+			l.pushBack(3);
+			l.clear();
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+		}
 		assertEquals(0, l.elements());
 
 		assertEquals(false, l1.clear());
@@ -168,9 +172,10 @@ public class DoubleLinkedListTest {
 	@Test
 	public void pushFrontTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
-		l.pushFront(1);
-		l.pushFront(2);
 		try {
+			l.pushFront(1);
+			l.pushFront(2);
+
 			assertEquals(2, l.peekFront());
 		} catch (Exception e) {
 			fail("Unexpected Exception");
@@ -180,9 +185,9 @@ public class DoubleLinkedListTest {
 	@Test
 	public void pushBackTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
-		l.pushFront(2);
-		l.pushBack(3);
 		try {
+			l.pushFront(2);
+			l.pushBack(3);
 			assertEquals(3, l.peekBack());
 		} catch (Exception e) {
 			fail("Unexpected Exception");
@@ -195,13 +200,18 @@ public class DoubleLinkedListTest {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-
-		l.pushFront(1);
-		l.pushBack(2);
-		l.pushBack(3);
-
-		other = l.clone();
 		try {
+			l.pushFront(1);
+			l.pushBack(2);
+			l.pushBack(3);
+
+		} catch (Exception e) {
+			fail("Unexpected Exception");
+
+		}
+		try {
+			other = l.clone();
+
 			l.pushFront(other);
 			assertEquals(1, l.popFront());
 			assertEquals(2, l.popFront());
@@ -212,6 +222,7 @@ public class DoubleLinkedListTest {
 		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
+
 		try {
 			l.popFront();
 		} catch (InvalidAccessException e) {
@@ -239,12 +250,13 @@ public class DoubleLinkedListTest {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-		l.pushFront(1);
-		l.pushBack(2);
-		l.pushBack(3);
-
-		other.pushBack(2);
 		try {
+			l.pushFront(1);
+			l.pushBack(2);
+			l.pushBack(3);
+
+			other.pushBack(2);
+
 			assertEquals(1, l.peekFront());
 			assertEquals(1, l.peekFront());
 
@@ -269,29 +281,29 @@ public class DoubleLinkedListTest {
 	public void popBackTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
-
-		l.pushFront(1);
-		l.pushFront(2);
-		l.pushBack(3);
-
 		try {
+			l.pushFront(1);
+			l.pushFront(2);
+			l.pushBack(3);
+
 			assertEquals(3, l.popBack());
 			assertEquals(1, l.popBack());
 			assertEquals(2, l.popBack());
-		} catch (InvalidAccessException e) {
+		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
+
 		try {
 			l.popBack();
 		} catch (InvalidAccessException e) {
-
+			// expected
 		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
 		try {
 			l1.popBack();
 		} catch (InvalidAccessException e) {
-
+			// expected
 		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
@@ -302,11 +314,11 @@ public class DoubleLinkedListTest {
 		DoubleLinkedList l = new DoubleLinkedList();
 		DoubleLinkedList l1 = new DoubleLinkedList();
 		DoubleLinkedList other = new DoubleLinkedList();
-
-		l.pushFront(1);
-		l.pushBack(2);
-		l.pushBack(3);
 		try {
+			l.pushFront(1);
+			l.pushBack(2);
+			l.pushBack(3);
+
 			assertEquals(3, l.peekBack());
 			assertEquals(3, l.peekBack());
 			l.popBack();
@@ -316,7 +328,7 @@ public class DoubleLinkedListTest {
 			other.pushBack(l);
 			assertEquals(2, other.peekBack());
 			assertEquals(2, other.peekBack());
-		} catch (InvalidAccessException e) {
+		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
 
@@ -332,41 +344,42 @@ public class DoubleLinkedListTest {
 	@Test
 	public void elementsTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
-
-		l.pushFront(1);
-		l.pushFront(2);
-		l.pushBack(3);
 		try {
+			l.pushFront(1);
+			l.pushFront(2);
+			l.pushBack(3);
+
 			assertEquals(3, l.elements());
 			l.popFront();
 			assertEquals(2, l.elements());
 			l.popBack();
 			assertEquals(1, l.elements());
-		} catch (InvalidAccessException e) {
+
+			l.pushFront(1);
+			l.pushBack(3);
+		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
-		l.pushFront(1);
-		l.pushBack(3);
 
 	}
 
 	@Test
 	public void reverseTest() {
 		DoubleLinkedList l = new DoubleLinkedList();
-
-		l.pushBack(1);
-		l.pushBack(2);
-		l.pushBack(3);
-		l.pushBack(4);
-		l.pushBack(5);
-		l.reverse();
 		try {
+			l.pushBack(1);
+			l.pushBack(2);
+			l.pushBack(3);
+			l.pushBack(4);
+			l.pushBack(5);
+			l.reverse();
+
 			assertEquals(5, l.popFront());
 			assertEquals(4, l.popFront());
 			assertEquals(3, l.popFront());
 			assertEquals(2, l.popFront());
 			assertEquals(1, l.popFront());
-		} catch (InvalidAccessException e) {
+		} catch (Exception e) {
 			fail("Unexpected Exception");
 		}
 	}

@@ -36,12 +36,15 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 	 * 
 	 * @throws InvalidAccessException
 	 *             if the index is smaller than 0
+	 * @throws ValueException
+	 *             if the value is not comparable to the root node.
 	 */
 	public void insertAt(int index, Comparable val)
-			throws InvalidAccessException {
+			throws InvalidAccessException, ValueException {
 		if (index - 1 < 0) {
 			throw new InvalidAccessException("Index < 0");
 		}
+
 		if (this.head == null) {
 			DLNode n = new DLNode();
 			this.head = n;
@@ -49,10 +52,25 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 
 		}
 
+		DLNode current = head;
+
+		while (current.isInitialized()) {
+
+			current = current.getNext();
+
+		}
+		if (current.getNext() != null && current.getVal() != null) {
+
+			if (!isComparable(head.getVal(), val)) {
+				throw new ValueException(
+						"The value you want to insert is not the same Type as the head value.");
+			}
+		}
+
 		if (this.countElements() - 1 > index - 1) {
 			if (isNodeInitialized(index - 1) == true) {
 				DLNode newNode = new DLNode(val);
-				DLNode current = runToIndex(index - 2);
+				current = runToIndex(index - 2);
 
 				DLNode next = current.getNext();
 
@@ -62,12 +80,12 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 				next.setPrev(newNode);
 
 			} else {
-				DLNode current = runToIndex(index - 1);
+				current = runToIndex(index - 1);
 
 				current.setVal(val);
 			}
 		} else { // countElement< index
-			DLNode current = this.tail;
+			current = this.tail;
 
 			for (int i = this.countElements() - 1; i < index - 1; i++) {
 				DLNode newNode = new DLNode();
@@ -80,7 +98,6 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 			tail = current;
 
 		}
-
 	}
 
 	/**
@@ -214,7 +231,7 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 			next = current.getNext();
 
 			prev = current.getPrev();
-			
+
 			while (prev.getVal() == null) {
 				if (head == prev) {
 					head = null;
@@ -223,7 +240,7 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 				}
 				prev = prev.getPrev();
 			}
-			
+
 			prev.setNext(null);
 			current.setPrev(null);
 			tail = prev;
@@ -298,6 +315,24 @@ public class RandomAccessDoubleLinkedList extends DoubleLinkedList {
 		}
 
 		return current.getVal();
+	}
+
+	/**
+	 * This method returns true if two comparable are comparable false otherwise
+	 * 
+	 * @param _c1
+	 *            the one comparable
+	 * @param _c2
+	 *            the other comparable
+	 * @return true if the two comparable are comparable otherwise false
+	 */
+	public static boolean isComparable(Comparable _c1, Comparable _c2) {
+		try {
+			_c1.compareTo(_c2);
+			return true;
+		} catch (ClassCastException _e) {
+			return false;
+		}
 	}
 
 	/**
